@@ -1,0 +1,167 @@
+type _ImmutableObjectStorageRefillResult = 
+ record {
+   success: opt bool;
+   topped_up_amount: opt nat;
+ };
+type _ImmutableObjectStorageRefillInformation = record {
+                                                  proposed_top_up_amount:
+                                                   opt nat;};
+type _ImmutableObjectStorageCreateCertificateResult = 
+ record {
+   blob_hash: text;
+   method: text;
+ };
+type UserRole__1 = 
+ variant {
+   admin;
+   guest;
+   user;
+ };
+type UserRole = 
+ variant {
+   admin;
+   advertiser;
+   driver;
+   passenger;
+ };
+type UserProfile = 
+ record {
+   adsLink: opt text;
+   avatar: opt ExternalBlob;
+   carModel: opt text;
+   carPlate: opt text;
+   city: text;
+   cpf: opt text;
+   createdAt: Time;
+   deviceId: text;
+   freeMinutes: opt nat;
+   id: principal;
+   isBanned: bool;
+   maxMinutesPerTrip: opt nat;
+   minuteRate: opt nat;
+   name: text;
+   paymentLink: opt text;
+   qrCode: opt text;
+   role: UserRole;
+   state: text;
+   subscriptionExpiry: int;
+   subscriptionPlan: text;
+   totalEarnings: opt nat;
+ };
+type TripStatus = 
+ variant {
+   completed;
+   inProgress;
+   requested;
+ };
+type Trip = 
+ record {
+   driver: principal;
+   freeMinutesUsed: nat;
+   id: text;
+   paidMinutes: nat;
+   passenger: principal;
+   startTime: Time;
+   status: TripStatus;
+   totalPaid: nat;
+ };
+type Time = int;
+type PendingTimeRequest = 
+ record {
+   driver: principal;
+   passenger: principal;
+   requestedMinutes: nat;
+ };
+type PaymentStatus = 
+ variant {
+   confirmed;
+   pending;
+ };
+type PaymentMethod = 
+ variant {
+   cash;
+   pix;
+ };
+type Payment = 
+ record {
+   amount: nat;
+   driver: principal;
+   id: text;
+   minutes: nat;
+   passenger: principal;
+   paymentMethod: PaymentMethod;
+   status: PaymentStatus;
+ };
+type ExternalBlob = blob;
+type AdminStats = 
+ record {
+   activeSubscriptions: nat;
+   totalAdvertisers: nat;
+   totalBanned: nat;
+   totalDrivers: nat;
+   totalPassengers: nat;
+ };
+type AdRequest = 
+ record {
+   advertiser: principal;
+   city: text;
+   contactLink: text;
+   createdAt: Time;
+   id: text;
+   video: ExternalBlob;
+ };
+type Ad = 
+ record {
+   advertiser: principal;
+   approved: bool;
+   city: text;
+   contactLink: text;
+   createdAt: Time;
+   id: text;
+   video: ExternalBlob;
+   viewCount: nat;
+ };
+service : {
+  _immutableObjectStorageBlobsAreLive: (hashes: vec blob) -> (vec bool) query;
+  _immutableObjectStorageBlobsToDelete: () -> (vec blob) query;
+  _immutableObjectStorageConfirmBlobDeletion: (blobs: vec blob) -> ();
+  _immutableObjectStorageCreateCertificate: (blobHash: text) ->
+   (_ImmutableObjectStorageCreateCertificateResult);
+  _immutableObjectStorageRefillCashier: (refillInformation:
+   opt _ImmutableObjectStorageRefillInformation) ->
+   (_ImmutableObjectStorageRefillResult);
+  _immutableObjectStorageUpdateGatewayPrincipals: () -> ();
+  _initializeAccessControl: () -> ();
+  adminBanUser: (userId: principal) -> (bool);
+  adminDeleteUser: (userId: principal) -> (bool);
+  adminGetAllProfiles: () -> (vec UserProfile) query;
+  adminGetStats: () -> (AdminStats) query;
+  adminSaveUserDeviceId: (deviceId: text) -> ();
+  assignCallerUserRole: (user: principal, role: UserRole__1) -> ();
+  getAdvertiserMonthlyViews: () -> (nat) query;
+  getAdvertisersByCity: (city: text) -> (vec UserProfile) query;
+  getAllAdRequests: () -> (vec AdRequest) query;
+  getAllAds: () -> (vec Ad) query;
+  getAllAdvertisers: () -> (vec UserProfile) query;
+  getAllDriverProfiles: () -> (vec UserProfile) query;
+  getAllPayments: () -> (vec Payment) query;
+  getAllProfiles: () -> (vec UserProfile) query;
+  getAllSessions: () -> (vec Trip) query;
+  getApprovedAdsForCity: (city: text) -> (vec Ad) query;
+  getAvailableDriversByCity: (city: text) -> (vec UserProfile) query;
+  getAvailablePassengersByCity: (city: text) -> (vec UserProfile) query;
+  getCallerUserProfile: () -> (opt UserProfile) query;
+  getCallerUserRole: () -> (UserRole__1) query;
+  getConfirmedDriversByCity: (city: text) -> (vec UserProfile) query;
+  getDriverMonthlyEarnings: () -> (nat) query;
+  getDriverProfile: (driver: principal) -> (UserProfile) query;
+  getPaymentStatus: (sessionId: text) -> (Payment) query;
+  getPendingTimeRequestsForDriverProfile: (driver: principal) ->
+   (vec PendingTimeRequest) query;
+  getRideHistory: (passenger: principal) -> (vec Trip) query;
+  getSessionsForDriverProfile: (driver: principal) -> (vec Trip) query;
+  getUserProfile: (user: principal) -> (opt UserProfile) query;
+  getVerifiedDriversByCity: (city: text) -> (vec UserProfile) query;
+  isCallerAdmin: () -> (bool) query;
+  saveCallerUserProfile: (profile: UserProfile) -> ();
+}

@@ -1,0 +1,176 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: "BricolageGrotesque";
+  src: url("/assets/fonts/BricolageGrotesque.woff2") format("woff2");
+  font-weight: 200 800;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "PlusJakartaSans";
+  src: url("/assets/fonts/PlusJakartaSans.woff2") format("woff2");
+  font-weight: 300 700;
+  font-display: swap;
+}
+
+@layer base {
+  :root {
+    --radius: 1rem;
+    /* Dark cyber palette */
+    --background: 0.115 0.015 255;
+    --foreground: 0.93 0.01 240;
+    --card: 0.145 0.022 255;
+    --card-foreground: 0.93 0.01 240;
+    --popover: 0.16 0.025 255;
+    --popover-foreground: 0.93 0.01 240;
+    --primary: 0.52 0.22 293;
+    --primary-foreground: 0.98 0 0;
+    --secondary: 0.19 0.03 255;
+    --secondary-foreground: 0.85 0.02 240;
+    --muted: 0.19 0.025 255;
+    --muted-foreground: 0.58 0.04 255;
+    --accent: 0.55 0.18 200;
+    --accent-foreground: 0.98 0 0;
+    --destructive: 0.62 0.24 27;
+    --destructive-foreground: 0.98 0 0;
+    --border: 0.25 0.04 255;
+    --input: 0.22 0.035 255;
+    --ring: 0.52 0.22 293;
+    /* Neon colors */
+    --neon-purple: 0.52 0.22 293;
+    --neon-cyan: 0.7 0.18 200;
+    --neon-green: 0.72 0.19 145;
+    --neon-blue: 0.5 0.2 255;
+    --neon-orange: 0.72 0.2 40;
+    /* Chart */
+    --chart-1: 0.52 0.22 293;
+    --chart-2: 0.7 0.18 200;
+    --chart-3: 0.72 0.19 145;
+    --chart-4: 0.5 0.2 255;
+    --chart-5: 0.72 0.2 40;
+    --sidebar: 0.13 0.02 255;
+    --sidebar-foreground: 0.93 0.01 240;
+    --sidebar-primary: 0.52 0.22 293;
+    --sidebar-primary-foreground: 0.98 0 0;
+    --sidebar-accent: 0.19 0.03 255;
+    --sidebar-accent-foreground: 0.85 0.02 240;
+    --sidebar-border: 0.25 0.04 255;
+    --sidebar-ring: 0.52 0.22 293;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  html {
+    color-scheme: dark;
+  }
+
+  body {
+    @apply bg-background text-foreground font-body;
+    background: linear-gradient(
+      135deg,
+      oklch(0.1 0.02 255) 0%,
+      oklch(0.115 0.015 255) 100%
+    );
+    min-height: 100vh;
+  }
+}
+
+@layer utilities {
+  .font-display {
+    font-family: "BricolageGrotesque", sans-serif;
+  }
+  .font-body {
+    font-family: "PlusJakartaSans", sans-serif;
+  }
+  .neon-border-purple {
+    border: 1px solid oklch(var(--neon-purple));
+    box-shadow: 0 0 12px oklch(var(--neon-purple) / 0.3), inset 0 0 12px
+      oklch(var(--neon-purple) / 0.05);
+  }
+  .neon-border-cyan {
+    border: 1px solid oklch(var(--neon-cyan));
+    box-shadow: 0 0 12px oklch(var(--neon-cyan) / 0.3), inset 0 0 12px
+      oklch(var(--neon-cyan) / 0.05);
+  }
+  .neon-border-green {
+    border: 1px solid oklch(var(--neon-green));
+    box-shadow: 0 0 12px oklch(var(--neon-green) / 0.3), inset 0 0 12px
+      oklch(var(--neon-green) / 0.05);
+  }
+  .neon-text-purple {
+    color: oklch(var(--neon-purple));
+    text-shadow: 0 0 20px oklch(var(--neon-purple) / 0.6);
+  }
+  .neon-text-cyan {
+    color: oklch(var(--neon-cyan));
+    text-shadow: 0 0 20px oklch(var(--neon-cyan) / 0.6);
+  }
+  .neon-text-green {
+    color: oklch(var(--neon-green));
+    text-shadow: 0 0 20px oklch(var(--neon-green) / 0.6);
+  }
+  .gradient-btn-primary {
+    background: linear-gradient(
+      135deg,
+      oklch(var(--neon-green)) 0%,
+      oklch(var(--neon-cyan)) 100%
+    );
+    color: oklch(0.1 0 0);
+    font-weight: 700;
+  }
+  .gradient-btn-secondary {
+    background: linear-gradient(
+      135deg,
+      oklch(var(--neon-purple)) 0%,
+      oklch(var(--neon-cyan)) 100%
+    );
+    color: oklch(0.98 0 0);
+    font-weight: 700;
+  }
+  .card-cyber {
+    background: oklch(var(--card));
+    border: 1px solid oklch(var(--border));
+    border-radius: 1.25rem;
+  }
+  .glass-panel {
+    background: oklch(var(--card) / 0.7);
+    border: 1px solid oklch(var(--border) / 0.6);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow: 0 8px 32px oklch(0.05 0.02 255 / 0.5), inset 0 1px 0
+      oklch(var(--foreground) / 0.05);
+  }
+  .glow-avatar {
+    box-shadow: 0 0 20px oklch(var(--neon-purple) / 0.5), 0 0 40px
+      oklch(var(--neon-purple) / 0.2);
+  }
+  .timer-display {
+    font-family: "BricolageGrotesque", sans-serif;
+    font-size: 3rem;
+    font-weight: 800;
+    background: linear-gradient(
+      135deg,
+      oklch(var(--neon-green)),
+      oklch(var(--neon-cyan))
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .role-card {
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+  }
+  .role-card:hover {
+    background: oklch(var(--card) / 1.0);
+    box-shadow: 0 8px 32px var(--card-glow, oklch(var(--neon-purple) / 0.3)), 0
+      0 0 1px var(--card-glow, oklch(var(--neon-purple) / 0.4));
+  }
+  .text-neon-orange {
+    color: oklch(var(--neon-orange));
+  }
+}

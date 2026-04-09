@@ -1,0 +1,128 @@
+// Version: 1.0.0
+type AdRequest__654954136 =
+  {
+    advertiser : Principal;
+    city : Text;
+    contactLink : Text;
+    createdAt : Time__900049286;
+    id : Text;
+    video : ExternalBlob__246066408
+  };
+type Ad__904238058 =
+  {
+    advertiser : Principal;
+    approved : Bool;
+    city : Text;
+    contactLink : Text;
+    createdAt : Time__900049286;
+    id : Text;
+    video : ExternalBlob__246066408;
+    viewCount : Nat
+  };
+type Data__791452850<K, V> =
+  {var count : Nat__490723111; kvs : [var ?(K, V)]};
+type ExternalBlob__246066408 = Blob;
+type Int__270357528 = Int__616954475;
+type Int__616954475 = Int;
+type Internal__8484328<K, V> =
+  {children : [var ?Node__46230540<K, V>]; data : Data__791452850<K, V>};
+type Leaf__809889148<K, V> = {data : Data__791452850<K, V>};
+type Map__158565046<K, V> = Map__297112838<K, V>;
+type Map__297112838<K, V> =
+  {var root : Node__46230540<K, V>; var size : Nat__490723111};
+type Map__605269027<K, V> = Map__158565046<K, V>;
+type Nat__490723111 = Nat__920180692;
+type Nat__920180692 = Nat;
+type Node__46230540<K, V> =
+  {#internal : Internal__8484328<K, V>; #leaf : Leaf__809889148<K, V>};
+type PaymentMethod__68978920 = {#cash; #pix};
+type PaymentStatus__876794400 = {#confirmed; #pending};
+type Payment__159206904 =
+  {
+    amount : Nat;
+    driver : Principal;
+    id : Text;
+    minutes : Nat;
+    passenger : Principal;
+    paymentMethod : PaymentMethod__68978920;
+    status : PaymentStatus__876794400
+  };
+type PendingTimeRequest__992674457 =
+  {driver : Principal; passenger : Principal; requestedMinutes : Nat};
+type Time__796480547 = Int__270357528;
+type Time__900049286 = Time__796480547;
+type TripStatus__390562763 = {#completed; #inProgress; #requested};
+type Trip__14129367 =
+  {
+    driver : Principal;
+    freeMinutesUsed : Nat;
+    id : Text;
+    paidMinutes : Nat;
+    passenger : Principal;
+    startTime : Time__900049286;
+    status : TripStatus__390562763;
+    totalPaid : Nat
+  };
+type UserProfile__491224006 =
+  {
+    adsLink : ?Text;
+    avatar : ?ExternalBlob__246066408;
+    carModel : ?Text;
+    carPlate : ?Text;
+    city : Text;
+    cpf : ?Text;
+    createdAt : Time__900049286;
+    deviceId : Text;
+    freeMinutes : ?Nat;
+    id : Principal;
+    isBanned : Bool;
+    maxMinutesPerTrip : ?Nat;
+    minuteRate : ?Nat;
+    name : Text;
+    paymentLink : ?Text;
+    qrCode : ?Text;
+    role : UserRole__599675725;
+    state : Text;
+    subscriptionExpiry : Int;
+    subscriptionPlan : Text;
+    totalEarnings : ?Nat
+  };
+type UserRole__1054455867 = {#admin; #guest; #user};
+type UserRole__599675725 = {#admin; #advertiser; #driver; #passenger};
+actor {
+  stable accessControlState :
+    {
+      var adminAssigned : Bool;
+      userRoles : Map__605269027<Principal, UserRole__1054455867>
+    };
+  stable adRequests :
+    {
+      var root : Node__46230540<Text, AdRequest__654954136>;
+      var size : Nat__490723111
+    };
+  stable ads :
+    {
+      var root : Node__46230540<Text, Ad__904238058>;
+      var size : Nat__490723111
+    };
+  stable payments :
+    {
+      var root : Node__46230540<Text, Payment__159206904>;
+      var size : Nat__490723111
+    };
+  stable pendingTimeRequests :
+    {
+      var root : Node__46230540<Text, PendingTimeRequest__992674457>;
+      var size : Nat__490723111
+    };
+  stable trips :
+    {
+      var root : Node__46230540<Text, Trip__14129367>;
+      var size : Nat__490723111
+    };
+  stable userProfiles :
+    {
+      var root : Node__46230540<Principal, UserProfile__491224006>;
+      var size : Nat__490723111
+    }
+};

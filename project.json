@@ -1,0 +1,22 @@
+{
+  "overview": "ConectarCar é uma plataforma para motoristas de aplicativo monetizarem o compartilhamento de internet móvel com passageiros. Possui painel administrativo avançado com autenticação por e-mail/senha, gerenciamento completo de usuários, device fingerprinting, filtros por estado/cidade e ações de banimento/exclusão.",
+  "features": [
+    "Painel admin protegido por e-mail e senha específicos",
+    "Coleta de device ID (fingerprint) no cadastro de todos os usuários",
+    "Gerenciamento completo: banir/excluir usuários",
+    "Filtros por estado e cidade",
+    "Rastreamento de status de assinatura e pagamentos",
+    "Fluxo de anúncios obrigatórios para passageiros",
+    "QR Code exclusivo para motoristas",
+    "Painel de anunciantes com até 4 slots de anúncio"
+  ],
+  "category": "productivity",
+  "tags": [
+    "ride-sharing",
+    "internet-sharing",
+    "admin-panel",
+    "mobile",
+    "brazil"
+  ],
+  "last_updated": "2026-04-08T17:34:35.174Z"
+}
